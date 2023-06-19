@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Add Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+  <style>
+    .slider {
+      width: 300px;
+      height: 50px;
+      background-color: #f2f2f2;
+      position: relative;
+      margin: 20px;
+    }
+    
+    .slider-bar {
+      width: 100%;
+      height: 10px;
+      background-color: #ddd;
+      position: absolute;
+      top: 20px;
+    }
+    
+    .slider-thumb {
+      width: 20px;
+      height: 20px;
+      background-color: #4caf50;
+      position: absolute;
+      top: 10px;
+      left: 0;
+      cursor: grab;
+      border-radius: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .slider-value {
+      position: absolute;
+      top: 40px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      font-size: 14px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="slider">
+      <div class="slider-bar"></div>
+      <div class="slider-thumb"></div>
+      <div class="slider-value">0</div>
+    </div>
+  </div>
+
+  <!-- Add Bootstrap JS and jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const slider = document.querySelector('.slider');
+      const thumb = slider.querySelector('.slider-thumb');
+      const valueDisplay = slider.querySelector('.slider-value');
+    
+      let isDragging = false;
+    
+      function updateValue(event) {
+        const sliderWidth = slider.offsetWidth;
+        const clickX = event.clientX - slider.getBoundingClientRect().left;
+        const percent = Math.min(Math.max(clickX / sliderWidth, 0), 1);
+        const value = Math.round(percent * 100);
+        
+        thumb.style.left = `${percent * 100}%`;
+        valueDisplay.textContent = value;
+      }
+    
+      thumb.addEventListener('mousedown', function() {
+        isDragging = true;
+      });
+    
+      document.addEventListener('mousemove', function(event) {
+        if (isDragging) {
+          updateValue(event);
+        }
+      });
+    
+      document.addEventListener('mouseup', function() {
+        isDragging = false;
+      });
+    
+      slider.addEventListener('click', function(event) {
+        updateValue(event);
+      });
+    });
+  </script>
+</body>
+</html>
